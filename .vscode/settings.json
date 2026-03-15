@@ -1,0 +1,41 @@
+{
+  "intelephense.environment.includePaths": [
+    "${workspaceFolder}/vendor/php-stubs/wordpress-stubs",
+    "${workspaceFolder}/vendor/arifpavel/elementor-stubs"
+  ],
+  "intelephense.stubs": [
+    "apache",
+    "bcmath",
+    "Core",
+    "curl",
+    "date",
+    "json",
+    "mbstring",
+    "openssl",
+    "PDO",
+    "mysql",
+    "sqlite3",
+    "Phar",
+    "Reflection",
+    "session",
+    "sockets",
+    "standard",
+    "superglobals",
+    "tokenizer",
+    "xml",
+    "wordpress"
+  ],
+  "intelephense.diagnostics.enable": true,
+  "intelephense.files.associations": ["**/*.php"],
+  "intelephense.telemetry.enabled": false,
+  "files.exclude": {
+    // "**/node_modules": true,
+    "**/vendor/**/.git": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/vendor": true
+  },
+  "window.zoomLevel": 0.2,
+  "editor.fontSize": 18
+}
