@@ -3,11 +3,11 @@
 // TWWC => Trovia WP Wordcount
 
 
-namespace Hasan\TroviaWpWordcount;
+namespace Hasan\PetsAdoptionDatabaseTable;
 
-use Hasan\TroviaWpWordcount\App\Trait\Singleton;
-// use Hasan\TroviaWpWordcount\BlogContentEdit\BlogContentEdit;
-use Hasan\TroviaWpWordcount\WordCount\WordCount;
+use Hasan\PetsAdoptionDatabaseTable\App\Trait\Singleton;
+use Hasan\PetsAdoptionDatabaseTable\Modules\PetAdoption\PetAdoption;
+
 
 if (!defined('ABSPATH')) {
     exit;
@@ -18,28 +18,31 @@ class Main
 {
     use Singleton;
 
-    public $wordCount;
+    private array $modules = [];
+
+
 
     public function init()
     {
         $this->define_constance();
 
         add_action('plugins_loaded', [$this, 'plugins_loaded']);
+
     }
 
     public function define_constance()
     {
-        define('TWWC_PLUGIN_VERSION', '1.0.0');
-        define('TWWC_FIRST_UNIQUE_PLUGIN_AUTHOR', 'Hasan Karim');
+        define('PETAD_VERSION', '1.0.0');
+        define('PETAD_PLUGIN_AUTHOR', 'Hasan Karim');
 
         define(
-            'TWWC_PLUGIN_URL',
-            plugin_dir_url(dirname(__DIR__))
+            'PETAD_PLUGIN_URL',
+            plugin_dir_url(__FILE__)
         );
 
         define(
-            'TWWC_PLUGIN_PATH',
-            plugin_dir_path(dirname(__DIR__))
+            'PETAD_PLUGIN_PATH',
+            plugin_dir_path(__FILE__)
         );
     }
 
@@ -56,8 +59,17 @@ class Main
 
     private function load_classes()
     {
-        $this->wordCount = new WordCount();
-        $this->wordCount->init();
+        $this->modules = [
+            new PetAdoption(),
+        ];
 
+        foreach ($this->modules as $module) {
+            if (method_exists($module, 'register')) {
+                $module->register();
+            }
+
+
+        }
     }
+
 }
