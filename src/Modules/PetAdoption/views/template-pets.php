@@ -20,10 +20,10 @@ get_header(); ?>
 
   <?php
   $wpdb;
-  $pets = $wpdb->get_results("SELECT * FROM wp_pets WHERE species = 'dog' LIMIT 100");
-  echo "<pre>";
-  var_dump($pets);
-  echo "</pre>";
+  $tablename = $wpdb->prefix . 'pets';
+  $ourQuery = $wpdb->prepare("SELECT * FROM $tablename  LIMIT 100");
+  $pets = $wpdb->get_results($ourQuery);
+
   ?>
 
   <table class="pet-adoption-table">
@@ -36,15 +36,25 @@ get_header(); ?>
       <th>Favorite Color</th>
       <th>Favorite Food</th>
     </tr>
-    <tr>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
+    <?php
+    foreach ($pets as $pet) {
+      ?>
+      <tr>
+        <td><?php echo sanitize_text_field($pet->petname); ?></td>
+        <td><?php echo sanitize_text_field($pet->species); ?></td>
+        <td><?php echo sanitize_text_field($pet->petweight); ?></td>
+        <td><?php echo sanitize_text_field($pet->birthyear); ?></td>
+        <td><?php echo sanitize_text_field($pet->favhobby); ?></td>
+        <td><?php echo sanitize_text_field($pet->favcolor); ?></td>
+        <td><?php echo sanitize_text_field($pet->favfood); ?></td>
+
+      </tr>
+      <?php
+
+    }
+    ?>
+
+
   </table>
 
 </div>
